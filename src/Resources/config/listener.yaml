@@ -14,13 +14,13 @@ services:
     tags:
       - { name: 'contao.cronjob', interval: 'minutely', method: 'onExecute'}
 
-  # data container
-  eblick_contao_trigger.listener.datacontainer.common:
-    class: 'EBlick\ContaoTrigger\EventListener\DataContainer\Common'
-    tags:
-      - { name: 'contao.callback', table: 'tl_eblick_trigger', target: 'config.onload', method: 'addBackendCss'}
-      - { name: 'contao.callback', table: 'tl_eblick_trigger_log', target: 'config.onload', method: 'addBackendCss'}
+  # backend css (loaded on every backend request for navigation icon)
+  eblick_contao_trigger.listener.backend_css:
+    class: 'EBlick\ContaoTrigger\EventListener\BackendCssListener'
+    arguments:
+      - '@contao.routing.scope_matcher'
 
+  # data container
   eblick_contao_trigger.listener.datacontainer.trigger:
     class: 'EBlick\ContaoTrigger\EventListener\DataContainer\Trigger'
     arguments:
